@@ -84,7 +84,6 @@ public class AuthActivity extends AppCompatActivity {
                                         Toast.makeText(AuthActivity.this, "Sign up successful", Toast.LENGTH_LONG).show();
                                         Intent intent = new Intent(AuthActivity.this, FormActivity.class);
                                         startActivity(intent);
-
                                         finish();
                                     }
 
@@ -137,7 +136,7 @@ public class AuthActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(AuthActivity.this,"Already Signed In", Toast.LENGTH_SHORT);
+            Toast.makeText(AuthActivity.this,"Already Signed In", Toast.LENGTH_SHORT).show();
 
             // Launch Map Screen or News Feed activity
             Intent intent = new Intent(AuthActivity.this, FormActivity.class);
