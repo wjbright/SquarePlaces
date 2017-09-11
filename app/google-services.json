@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "991169025550",
+    "firebase_url": "https://square-places.firebaseio.com",
+    "project_id": "square-places",
+    "storage_bucket": "square-places.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991169025550:android:a59e36e8003847ee",
+        "android_client_info": {
+          "package_name": "com.squareplaces.squareplaces"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "991169025550-nis1u6rgu81c2etlutoq2dgr81hnfmq4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.squareplaces.squareplaces",
+            "certificate_hash": "c348b154fd5707f1fa39afaa3d218ab46e928d77"
+          }
+        },
+        {
+          "client_id": "991169025550-fsa90chho4gke6ns7l8e14tusnsm77sq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC89Eg5rWrBDaSZzpoPLJdLhRNgPK9e0Bg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "991169025550-fsa90chho4gke6ns7l8e14tusnsm77sq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

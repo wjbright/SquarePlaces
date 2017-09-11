@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.squareplaces.squareplaces.MainActivity"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/square_places_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:minHeight="100dp"
+        android:minWidth="100dp"
+        android:maxHeight="100dp"
+        android:maxWidth="100dp"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/square_places_logo"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="40dp"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/email"
+        android:hint="@string/email"
+        android:contentDescription=""
+        android:background="@color/colorWhite"
+        android:layout_gravity="start"
+        android:textAlignment="viewStart"
+        android:layout_marginBottom="70dp"
+        android:layout_centerVertical="true"
+        android:layout_alignBottom="@+id/password"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:hint="@string/password"
+        android:background="@color/colorWhite"
+        android:minHeight="40dp"
+        android:id="@+id/password"
+        android:textIsSelectable="false"
+        android:maxLines="1"
+        android:layout_above="@+id/signIn"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="158dp" />
+
+    <Button
+        android:text="@string/peep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/signIn"
+        android:onClick="signInUser"
+        android:layout_marginBottom="14dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/progressBar"
+        android:layout_toStartOf="@+id/progressBar" />
+
+    <Button
+        android:text="@string/newpeep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/signUp"
+        android:onClick="signUpUser"
+        android:layout_marginRight="54dp"
+        android:layout_marginEnd="54dp"
+        android:layout_alignBaseline="@+id/signIn"
+        android:layout_alignBottom="@+id/signIn"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="38dp"
+        android:layout_above="@+id/signUp"
+        android:layout_alignLeft="@+id/signUp"
+        android:layout_alignStart="@+id/signUp" />
+</RelativeLayout>

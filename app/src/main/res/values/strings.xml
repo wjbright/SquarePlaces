@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Peeply</string>
+    <string name="peep">Peep</string>
+    <string name="newpeep">Sign Up Peep</string>
+
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="female_reg">Female</string>
+    <string name="male_reg">Male</string>
+    <string name="square_places_logo">Square Places Logo</string>
+    <string name="title_activity_maps">Map</string>
+</resources>
