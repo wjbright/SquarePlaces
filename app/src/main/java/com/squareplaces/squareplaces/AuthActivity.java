@@ -17,10 +17,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 
 /**
- * Created by KRYPT TECH on 9/2/2017.
+ * Copyright SQUARE PLACES all rights reserved
  */
 
 public class AuthActivity extends AppCompatActivity {
@@ -64,10 +65,12 @@ public class AuthActivity extends AppCompatActivity {
                 String password= input_password.getText().toString().trim();
 
                 if (!checkEmail()){
+                    progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
 
                 if (!checkPassword()){
+                    progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
 
@@ -77,6 +80,17 @@ public class AuthActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
                                     if (!task.isSuccessful()) {
+
+                                        if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                            progressBar.setVisibility(View.INVISIBLE);
+                                            Toast.makeText(AuthActivity.this, "Sorry, Username already exists", Toast.LENGTH_LONG).show();
+
+                                            //Provide Sign In option "Is this your account? Sign In!"
+                                        }
+
+                                        progressBar.setVisibility(View.INVISIBLE);
+
+                                        //provide a more helpful error message
                                         Toast.makeText(AuthActivity.this, "Authentication failed" + task.getException(), Toast.LENGTH_LONG).show();
 
                                     } else {
@@ -105,10 +119,12 @@ public class AuthActivity extends AppCompatActivity {
                     String password= input_password.getText().toString().trim();
 
                     if (!checkEmail()){
+                        progressBar.setVisibility(View.INVISIBLE);
                         return;
                     }
 
                     if (!checkPassword()){
+                        progressBar.setVisibility(View.INVISIBLE);
                         return;
                     }
 
@@ -120,14 +136,16 @@ public class AuthActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (!task.isSuccessful()) {
-                                        newUser();
+                                        progressBar.setVisibility(View.INVISIBLE);
                                         Toast.makeText(AuthActivity.this, "Authentication failed" + task.getException(), Toast.LENGTH_LONG).show();
                                     } else {
                                         progressBar.setVisibility(View.INVISIBLE);
-                                        formIntent();
                                         Toast.makeText(AuthActivity.this, "Sign In successful", Toast.LENGTH_LONG).show();
 
                                         //Launch Map Activity or News Feed
+
+                                        //For the sake of Testing FormActivity, we will be launching
+                                        //FormActivity instead
                                         Intent intent = new Intent(AuthActivity.this, FormActivity.class);
                                         startActivity(intent);
                                     }
@@ -136,9 +154,12 @@ public class AuthActivity extends AppCompatActivity {
                 }
             });
         } else {
+            //Log this instead
             Toast.makeText(AuthActivity.this,"Already Signed In", Toast.LENGTH_SHORT).show();
 
             // Launch Map Screen or News Feed activity
+            //For the sake of Testing FormActivity, we will be launching
+            //FormActivity instead
             Intent intent = new Intent(AuthActivity.this, FormActivity.class);
             startActivity(intent);
         }
@@ -179,17 +200,6 @@ public class AuthActivity extends AppCompatActivity {
     private void requestFocus(View view) {
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        }
-    }
-
-    private static boolean newUser() {
-        return true;
-    }
-
-    private void formIntent(){
-        if (newUser()) {
-            Intent intent = new Intent(AuthActivity.this, FormActivity.class);
-            startActivity(intent);
         }
     }
 
