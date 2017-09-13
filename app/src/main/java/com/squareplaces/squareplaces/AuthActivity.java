@@ -19,9 +19,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Copyright SQUARE PLACES all rights reserved
@@ -31,6 +35,8 @@ public class AuthActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+    private String uid;
     private Button sign_up_user, sign_in_user;
     private EditText input_email, input_password;
     private ProgressBar progressBar;
@@ -51,8 +57,9 @@ public class AuthActivity extends AppCompatActivity {
         //Get FireBase Auth Instance
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+        uid = firebaseUser.getUid();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReferenceFromUrl(squareplacesDatabase);
+        databaseReference = firebaseDatabase.getReferenceFromUrl(squareplacesDatabase);
 
 
         //initialize button and listeners
@@ -69,7 +76,7 @@ public class AuthActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 progressBar.setVisibility(View.VISIBLE);
-                String email = input_email.getText().toString().trim();
+                final String email = input_email.getText().toString().trim();
                 String password= input_password.getText().toString().trim();
 
                 if (!checkEmail()){
@@ -104,6 +111,12 @@ public class AuthActivity extends AppCompatActivity {
                                     } else {
                                         progressBar.setVisibility(View.INVISIBLE);
                                         Toast.makeText(AuthActivity.this, "Sign up successful", Toast.LENGTH_LONG).show();
+
+                                        try{
+                                            writeNewUser(email, uid);
+                                        }catch (Exception e){
+                                            Toast.makeText(AuthActivity.this, "Error:" + e, Toast.LENGTH_LONG).show();
+                                        }
                                         Intent intent = new Intent(AuthActivity.this, FormActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -213,24 +226,26 @@ public class AuthActivity extends AppCompatActivity {
 
     @IgnoreExtraProperties
     private class User {
-        private String user_email;
-        private String user_password;
+        private String userId;
+        private String userEmail;
 
         private User() {
             //Default Constructor for calls to DataSnapshot.getValue(User.class);
         }
 
-        private User(String email, String password) {
-            this.user_email = email;
-            this.user_password = password;
+        private User(String email, String uid) {
+            this.userEmail = email;
+            this.userId = uid;
         }
 
     }
 
 
-    private void writeNewUser(String userId, String email, String password) {
-        User user = new User(email, password);
+    private void writeNewUser(String email, String userId) {
+        User user = new User(email, userId);
 
+        //when there has been an update in the User Email child
+        databaseReference.child("users").child(userId).setValue(user);
     }
 
 
