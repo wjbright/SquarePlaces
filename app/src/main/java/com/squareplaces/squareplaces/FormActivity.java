@@ -47,9 +47,6 @@ public class FormActivity extends AppCompatActivity {
 
         //get user ID
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-        //May like cause a NPE
-        // TODO: 9/13/2017 Fix Null pointer exception
         uid = firebaseUser.getUid();
 
         //set button listeners
@@ -70,44 +67,13 @@ public class FormActivity extends AppCompatActivity {
 
     private void setdatabaseRef(DatabaseReference databaseRef) {
         this.databaseRef = databaseRef;
-        databaseRef.setValue(user_first_name.getText().toString());
-        databaseRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+        /*
+        * ToDo: Create personal preference for user id
+        */
+        //example
+        //databaseRef.child("users").child(userId).setValue(formInputObject);
 
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        databaseRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @IgnoreExtraProperties
@@ -127,7 +93,9 @@ public class FormActivity extends AppCompatActivity {
         private void writeNewUser(){
             User user = new User(uid, first_name_input, last_name_input);
 
-            databaseRef.child("user").child(uid).setValue(user);
+            //write the info under the user's email
+            //....child(user_email)
+            //databaseRef.child("user").child(uid).setValue(user);
         }
     }
 
