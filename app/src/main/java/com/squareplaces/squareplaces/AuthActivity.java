@@ -19,6 +19,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 /**
  * Copyright SQUARE PLACES all rights reserved
@@ -27,9 +30,11 @@ import com.google.firebase.auth.FirebaseUser;
 public class AuthActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+    private FirebaseDatabase firebaseDatabase;
     private Button sign_up_user, sign_in_user;
     private EditText input_email, input_password;
     private ProgressBar progressBar;
+    private String squareplacesDatabase = "https://square-places.firebaseio.com/"; //Not sure whether to make this 'final'
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +51,9 @@ public class AuthActivity extends AppCompatActivity {
         //Get FireBase Auth Instance
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReferenceFromUrl(squareplacesDatabase);
+
 
         //initialize button and listeners
         signUp();
@@ -202,6 +210,29 @@ public class AuthActivity extends AppCompatActivity {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
     }
+
+    @IgnoreExtraProperties
+    private class User {
+        private String user_email;
+        private String user_password;
+
+        private User() {
+            //Default Constructor for calls to DataSnapshot.getValue(User.class);
+        }
+
+        private User(String email, String password) {
+            this.user_email = email;
+            this.user_password = password;
+        }
+
+    }
+
+
+    private void writeNewUser(String userId, String email, String password) {
+        User user = new User(email, password);
+
+    }
+
 
     @Override
     protected void onResume() {
