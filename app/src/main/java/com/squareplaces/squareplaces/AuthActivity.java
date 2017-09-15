@@ -57,13 +57,10 @@ public class AuthActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReferenceFromUrl(squareplacesDatabase);
 
-
         //initialize button and listeners
         signUp();
         signIn();
     }
-
-
 
     private void signUp(){
 

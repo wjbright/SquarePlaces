@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**HELLO FROM VIROSOFT */
+
     private final static int SPLASH_TIME_OUT = 2000;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -17,11 +20,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(MainActivity.this, AuthActivity.class);
                     startActivity(intent);
-
                 //Close the activity
                 finish();
             }
         }, SPLASH_TIME_OUT);
     }
-
 }
