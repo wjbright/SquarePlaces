@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    /**HELLO FROM VIROSOFT*/
+    /** HELLO FROM VIROSOFT */
 
-    private final static int SPLASH_TIME_OUT = 3000;
+    private final static int SPLASH_TIME_OUT = 2000;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
