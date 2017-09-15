@@ -19,14 +19,14 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- * Created by KRYPT TECH on 9/5/2017.
+ * Copyright Square Places. All Rights Reserved.
  */
 
 public class FormActivity extends AppCompatActivity {
 
     private EditText user_first_name, user_last_name, user_phone_number, user_address;
     private Button form_submit_button;
-    private static String DATABASE_URL = "https://peeply-a6261.firebaseio.com/user_first_name";
+    private static String DATABASE_URL = "https://square-places.firebaseio.com/";
     private String uid;
     private String first_name_input;
     private String last_name_input;
@@ -59,62 +59,31 @@ public class FormActivity extends AppCompatActivity {
     }
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference squareplacesDbRef = database.getReferenceFromUrl(DATABASE_URL);
+    DatabaseReference databaseRef = database.getReferenceFromUrl(DATABASE_URL);
 
-    public DatabaseReference getSquareplacesDbRef() {
-        return squareplacesDbRef;
+    public DatabaseReference getdatabaseRef() {
+        return databaseRef;
     }
 
-    private void setSquareplacesDbRef(DatabaseReference squareplacesDbRef) {
-        this.squareplacesDbRef = squareplacesDbRef;
-        squareplacesDbRef.setValue(user_first_name.getText().toString());
-        squareplacesDbRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            }
+    private void setdatabaseRef(DatabaseReference databaseRef) {
+        this.databaseRef = databaseRef;
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+        /*
+        * ToDo: Create personal preference for user id
+        */
+        //example
+        //databaseRef.child("users").child(userId).setValue(formInputObject);
 
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        squareplacesDbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @IgnoreExtraProperties
-    public class User {
-        public String first_name;
-        public String last_name;
-        public String full_name;
-        public int phone_number;
+    private class User {
+        private String first_name;
+        private String last_name;
+        private String full_name;
+        private int phone_number;
 
-        public User (String userID, String first_name, String last_name){
+        private User (String userID, String first_name, String last_name){
             this.first_name = first_name;
             this.last_name = last_name;
             this.full_name = first_name + " " + last_name;
@@ -124,7 +93,9 @@ public class FormActivity extends AppCompatActivity {
         private void writeNewUser(){
             User user = new User(uid, first_name_input, last_name_input);
 
-            squareplacesDbRef.child("user").child(uid).setValue(user);
+            //write the info under the user's email
+            //....child(user_email)
+            //databaseRef.child("user").child(uid).setValue(user);
         }
     }
 
@@ -133,12 +104,12 @@ public class FormActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    setSquareplacesDbRef(squareplacesDbRef);
-                    getSquareplacesDbRef();
+                    setdatabaseRef(databaseRef);
+                    getdatabaseRef();
                     Toast.makeText(FormActivity.this, user_first_name.getText().toString() + " " + user_last_name.getText().toString(), Toast.LENGTH_LONG).show();
                     FormActivity.this.finish();
                 }catch (Exception e){
-                    Toast.makeText(FormActivity.this,"Error: " + e, Toast.LENGTH_LONG);
+                    Toast.makeText(FormActivity.this,"Error: " + e, Toast.LENGTH_LONG).show();
                 }
             }
         });

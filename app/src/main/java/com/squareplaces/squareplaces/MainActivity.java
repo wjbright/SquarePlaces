@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent(MainActivity.this, AuthActivity.class);
-                startActivity(intent);
+                    startActivity(intent);
 
                 //Close the activity
                 finish();

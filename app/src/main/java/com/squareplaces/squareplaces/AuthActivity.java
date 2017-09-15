@@ -17,18 +17,26 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 /**
- * Created by KRYPT TECH on 9/2/2017.
+ * Copyright SQUARE PLACES all rights reserved
  */
 
 public class AuthActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+    private String uid;
     private Button sign_up_user, sign_in_user;
     private EditText input_email, input_password;
     private ProgressBar progressBar;
+    private String squareplacesDatabase = "https://square-places.firebaseio.com/"; //Not sure whether to make this 'final'
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +53,10 @@ public class AuthActivity extends AppCompatActivity {
         //Get FireBase Auth Instance
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+        uid = firebaseUser.getUid();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReferenceFromUrl(squareplacesDatabase);
+
 
         //initialize button and listeners
         signUp();
@@ -60,14 +72,16 @@ public class AuthActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 progressBar.setVisibility(View.VISIBLE);
-                String email = input_email.getText().toString().trim();
+                final String email = input_email.getText().toString().trim();
                 String password= input_password.getText().toString().trim();
 
                 if (!checkEmail()){
+                    progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
 
                 if (!checkPassword()){
+                    progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
 
@@ -77,14 +91,30 @@ public class AuthActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
                                     if (!task.isSuccessful()) {
+
+                                        if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                            progressBar.setVisibility(View.INVISIBLE);
+                                            Toast.makeText(AuthActivity.this, "Sorry, Username already exists", Toast.LENGTH_LONG).show();
+
+                                            //Provide Sign In option "Is this your account? Sign In!"
+                                        }
+
+                                        progressBar.setVisibility(View.INVISIBLE);
+
+                                        //provide a more helpful error message
                                         Toast.makeText(AuthActivity.this, "Authentication failed" + task.getException(), Toast.LENGTH_LONG).show();
 
                                     } else {
                                         progressBar.setVisibility(View.INVISIBLE);
                                         Toast.makeText(AuthActivity.this, "Sign up successful", Toast.LENGTH_LONG).show();
+
+                                        try{
+                                            writeNewUser(email, uid);
+                                        }catch (Exception e){
+                                            Toast.makeText(AuthActivity.this, "Error:" + e, Toast.LENGTH_LONG).show();
+                                        }
                                         Intent intent = new Intent(AuthActivity.this, FormActivity.class);
                                         startActivity(intent);
-
                                         finish();
                                     }
 
@@ -106,10 +136,12 @@ public class AuthActivity extends AppCompatActivity {
                     String password= input_password.getText().toString().trim();
 
                     if (!checkEmail()){
+                        progressBar.setVisibility(View.INVISIBLE);
                         return;
                     }
 
                     if (!checkPassword()){
+                        progressBar.setVisibility(View.INVISIBLE);
                         return;
                     }
 
@@ -121,14 +153,16 @@ public class AuthActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (!task.isSuccessful()) {
-                                        newUser();
+                                        progressBar.setVisibility(View.INVISIBLE);
                                         Toast.makeText(AuthActivity.this, "Authentication failed" + task.getException(), Toast.LENGTH_LONG).show();
                                     } else {
                                         progressBar.setVisibility(View.INVISIBLE);
-                                        formIntent();
                                         Toast.makeText(AuthActivity.this, "Sign In successful", Toast.LENGTH_LONG).show();
 
                                         //Launch Map Activity or News Feed
+
+                                        //For the sake of Testing FormActivity, we will be launching
+                                        //FormActivity instead
                                         Intent intent = new Intent(AuthActivity.this, FormActivity.class);
                                         startActivity(intent);
                                     }
@@ -137,9 +171,12 @@ public class AuthActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(AuthActivity.this,"Already Signed In", Toast.LENGTH_SHORT);
+            //Log this instead
+            Toast.makeText(AuthActivity.this,"Already Signed In", Toast.LENGTH_SHORT).show();
 
             // Launch Map Screen or News Feed activity
+            //For the sake of Testing FormActivity, we will be launching
+            //FormActivity instead
             Intent intent = new Intent(AuthActivity.this, FormActivity.class);
             startActivity(intent);
         }
@@ -183,16 +220,30 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
-    private static boolean newUser() {
-        return true;
+    @IgnoreExtraProperties
+    private class User {
+        private String userId;
+        private String userEmail;
+
+        private User() {
+            //Default Constructor for calls to DataSnapshot.getValue(User.class);
+        }
+
+        private User(String email, String uid) {
+            this.userEmail = email;
+            this.userId = uid;
+        }
+
     }
 
-    private void formIntent(){
-        if (newUser()) {
-            Intent intent = new Intent(AuthActivity.this, FormActivity.class);
-            startActivity(intent);
-        }
+
+    private void writeNewUser(String email, String userId) {
+        User user = new User(email, userId);
+
+        //when there has been an update in the User Email child
+        databaseReference.child("users").child(userId).setValue(user);
     }
+
 
     @Override
     protected void onResume() {

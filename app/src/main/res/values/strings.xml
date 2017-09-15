@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Peeply</string>
-    <string name="peep">Peep</string>
-    <string name="newpeep">Sign Up Peep</string>
+    <string name="app_name">Square Places</string>
+    <string name="peep">Sign In</string>
+    <string name="newpeep">Sign Up</string>
 
     <string name="email">Email</string>
     <string name="password">Password</string>
