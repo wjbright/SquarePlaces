@@ -270,7 +270,6 @@ public class AuthActivity extends AppCompatActivity {
             this.userEmail = email;
             this.userId = uid;
         }
-
     }
 
 
