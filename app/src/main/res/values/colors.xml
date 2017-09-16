@@ -5,4 +5,13 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorShaddyWhite">#eeebeb</color>
+
+    <color name="layout_background1">#353535</color>
+    <color name="layout_background2">#edece8</color>
+    <color name="drawer_background">#dadad5</color>
+    <color name="list_background_pressed">#aaaaa6</color>
+    <color name="edittext_background">#f4f3ef</color>
+    <color name="hint_color">#818181</color>
+    <color name="text_color">#000000</color>
+    <color name="bg_overlay">#85000000</color>
 </resources>
