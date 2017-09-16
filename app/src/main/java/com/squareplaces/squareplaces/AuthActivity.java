@@ -123,7 +123,6 @@ public class AuthActivity extends AppCompatActivity {
 
         //Get FireBase Auth Instance
         firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         cd = new ConnectionDetector(this);
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
@@ -146,7 +145,6 @@ public class AuthActivity extends AppCompatActivity {
 //                            showMessage(getString(R.string.signin_error_email_2));
 //                        }
                     } else {
-                        Toast.makeText(AuthActivity.this, "Sign up successful", Toast.LENGTH_LONG).show();
                         try{
                             writeNewUser(email, firebaseAuth.getCurrentUser().getUid());
                         } catch (Exception e){
