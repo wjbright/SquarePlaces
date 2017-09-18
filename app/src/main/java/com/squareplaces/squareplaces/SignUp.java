@@ -113,6 +113,7 @@ public class SignUp extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             progressDialog.dismiss();
+//                            FORM ACTIVITY SHOULD BE HERE
                             promptGoToAccount();
                         }
                     }
