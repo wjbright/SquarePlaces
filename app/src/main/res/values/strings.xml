@@ -13,6 +13,8 @@
     <string name="font_system_default">"MONOSPACE"</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="password_sign_up_1">Password (at least 8 characters)</string>
+    <string name="password_sign_up_2">Password again</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="female_reg">Female</string>
@@ -20,7 +22,7 @@
     <string name="square_places_logo">Square Places Logo</string>
     <string name="title_activity_maps">Map</string>
 
-    <string name="please_wait">Please wait</string>
+    <string name="please_wait">Please wait&#8230;</string>
     <string name="signing_out">Signing out&#8230;</string>
     <string name="action_sign_in">SIGN IN</string>
     <string name="action_sign_up">SIGN UP</string>
@@ -32,6 +34,9 @@
     <string name="password_error_1">Please enter password</string>
     <string name="password_error_2">Password must be at least 8 characters long</string>
     <string name="password_error_3">Passwords do not match</string>
+    <string name="new_account_creating">Signing up&#8230;</string>
+    <string name="new_account_dialog_title">New account created</string>
+    <string name="new_account_dialog_message">Do you want to sign in to your new account now?</string>
     <string name="signin_error_email_1">No user exists with this email</string>
     <string name="signin_error_email_2">Sign in failed, please try again</string>
     <string name="forgot_password_email_sent1">A password reset email has been sent to\n</string>

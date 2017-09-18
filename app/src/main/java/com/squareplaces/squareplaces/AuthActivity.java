@@ -63,7 +63,7 @@ public class AuthActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(v==sign_up_user){
 //                    signUp();
-                    showMessage("No yet implemented");
+                    startActivity(new Intent(AuthActivity.this, SignUp.class));
                 } else if(v==sign_in_user){
                     if(isInternetAvailable()){
                         if(isEmailValid() && isPasswordValid()){
@@ -182,23 +182,6 @@ public class AuthActivity extends AppCompatActivity {
                         AuthActivity.this.finish();
                     }
                 }
-//            }).
-//                addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-//                    @Override
-//                    public void onSuccess(AuthResult authResult) {
-//                        Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-//                        startActivity(intent);
-//                        AuthActivity.this.finish();
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        if(e instanceof FirebaseAuthInvalidUserException){
-//                            showMessage(getString(R.string.signin_error_email_1));
-//                        } else {
-//                            showMessage(getString(R.string.signin_error_email_2));
-//                        }
-//                    }
         });
         progressDialog.setMessage(getString(R.string.new_account_sign_in));
         progressDialog.show();
