@@ -2,7 +2,15 @@
     <string name="app_name">Square Places</string>
     <string name="peep">Sign In</string>
     <string name="newpeep">Sign Up</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="not_now">NOT NOW</string>
 
+    <string name="font_regular">fonts/RobotoSlab-Regular.ttf</string>
+    <string name="font_iowanoldst_bt_roman">fonts/IowanOldSt-BT-Roman.ttf</string>
+    <string name="font_system_default">"MONOSPACE"</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="first_name">First Name</string>
@@ -11,4 +19,24 @@
     <string name="male_reg">Male</string>
     <string name="square_places_logo">Square Places Logo</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="please_wait">Please wait</string>
+    <string name="signing_out">Signing out&#8230;</string>
+    <string name="action_sign_in">SIGN IN</string>
+    <string name="action_sign_up">SIGN UP</string>
+    <string name="create_account">CREATE ACCOUNT</string>
+    <string name="new_account_sign_in">Signing in&#8230;</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="email_error_1">Please enter email address</string>
+    <string name="email_error_2">Invalid email address</string>
+    <string name="password_error_1">Please enter password</string>
+    <string name="password_error_2">Password must be at least 8 characters long</string>
+    <string name="password_error_3">Passwords do not match</string>
+    <string name="signin_error_email_1">No user exists with this email</string>
+    <string name="signin_error_email_2">Sign in failed, please try again</string>
+    <string name="forgot_password_email_sent1">A password reset email has been sent to\n</string>
+    <string name="forgot_password_email_sent2">\n\nClick on the link in the email to reset your password</string>
+    <string name="create_account_agreement">"By continuing, you are indicating that you agree to the Privacy Policy and Terms
+        completions."
+    </string>
 </resources>

@@ -1,17 +1,63 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:typeface">monospace</item>
     </style>
 
-    <style name="NoActionBar" parent="@android:style/Theme.Holo.Light">
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="edittext_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_marginTop">7dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingLeft">19dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textColorHint">@color/hint_color</item>
+        <item name="android:background">@drawable/sign_in_edittext_background</item>
+    </style>
+
+    <style name="create_account_edittext_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginLeft">11dp</item>
+        <item name="android:layout_marginRight">11dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingLeft">19dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">19sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textColorHint">@color/hint_color</item>
+        <item name="android:background">@drawable/sign_up_edittext_background</item>
+    </style>
+
+    <!--<style name="create_account_edittext_style">-->
+        <!--<item name="android:layout_width">match_parent</item>-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+        <!--<item name="android:layout_marginLeft">10dp</item>-->
+        <!--<item name="android:layout_marginRight">10dp</item>-->
+        <!--<item name="android:layout_marginTop">20dp</item>-->
+        <!--<item name="android:maxLines">1</item>-->
+        <!--<item name="android:textColor">@color/text_color</item>-->
+        <!--<item name="android:textColorHint">@color/hint_color</item>-->
+    <!--</style>-->
 
 </resources>
