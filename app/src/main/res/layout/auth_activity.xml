@@ -57,13 +57,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="38dp"
                 android:layout_marginLeft="28dp"
-                android:layout_marginRight="35dp"
                 android:gravity="right"
                 android:text="Don't have an account?"
                 android:textStyle="italic"
                 android:textColor="#ccffffff"
                 android:textSize="13sp"
-                virosoft:typeface="@string/font_regular"/>
+                virosoft:typeface="@string/font_regular"
+                android:layout_alignRight="@+id/sign_up"
+                android:layout_alignEnd="@+id/sign_up" />
 
             <Button
                 android:id="@+id/sign_up"

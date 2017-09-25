@@ -46,6 +46,8 @@
                 -->
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".FormActivity">
             <intent-filter>
@@ -67,6 +69,28 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".ConvoForm"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
+                <data
+                    android:host="www.squareplaces.com"
+                    android:pathPrefix="/squareplaces"
+                    android:scheme="http" />
+                <!-- note that the leading "/" is required for pathPrefix -->
+                <!--
+                Accepts URIs that begin with "example://squareplaces”
+                <data android:scheme="squareplaces"
+                      android:host="squareplaces" />
+                -->
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

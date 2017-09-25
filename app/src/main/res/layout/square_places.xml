@@ -13,16 +13,16 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:adjustViewBounds="true"
         android:contentDescription="@string/square_places_logo"
         android:maxHeight="160dp"
         android:maxWidth="160dp"
-        android:minHeight="50dp"
-        android:minWidth="50dp"
+        android:minHeight="60dp"
+        android:minWidth="60dp"
         android:scaleType="fitCenter"
         android:src="@drawable/square_places_logo" />
 </RelativeLayout>

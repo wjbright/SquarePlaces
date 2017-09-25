@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sign_up_options">How do you want to sign up?</string>
+    <string name="sign_up_option1">Email (should include text icon)</string>
+    <string name="sign_up_option2">Facebook (should include text icon)</string>
+    <string name="sign_up_option3">Google (should include text icon)</string>
+
+    <string name="error">Sorry! I didn\'t get that.</string>
+
+    <string name="user_email">What\'s your email address?</string>
+    <string name="user_email_error1">Sorry! That email is already taken.</string>
+    <string name="user_email_error2">If it is yours you can just sign in (Link to sign in activity).</string>
+    <string name="user_email_error3">I don\'t think that email exists. Check it again!</string>
+
+    <string name="user_password1">Tell us your password! Don\'t worry, we will keep it a secret (wink smiley)</string>
+    <string name="user_password2">Make sure it is at least 8 characters long.</string>
+    <string name="user_password3">You can mix up the letters with numbers and characters too. It makes passwords hard to crack.</string>
+    <string name="user_password_error1">That password is too short. Make it a bit longer. You need (number of characters more need) more characters</string>
+
+
+</resources>

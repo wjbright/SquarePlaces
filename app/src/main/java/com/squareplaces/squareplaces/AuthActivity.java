@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -22,16 +23,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.IgnoreExtraProperties;
 
 /**
  * Copyright SQUARE PLACES all rights reserved
@@ -41,6 +40,7 @@ public class AuthActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+    private FirebaseAnalytics firebaseAnalytics;
     private Button sign_up_user, sign_in_user;
     private EditText input_email, input_password;
     private ImageButton showPassword;
@@ -51,11 +51,15 @@ public class AuthActivity extends AppCompatActivity {
     private ConnectionDetector cd;
     private ProgressDialog progressDialog;
     private boolean isPasswordVisible;
+    private final String TAG = "AuthActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auth_activity);
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(AuthActivity.this);
+        //TODO Log using Firebase Analytics
 
         regular = Typeface.createFromAsset(getAssets(), getString(R.string.font_regular));
         onClickListener = new View.OnClickListener() {
@@ -63,15 +67,18 @@ public class AuthActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(v==sign_up_user){
 //                    signUp();
-                    showMessage("No yet implemented");
+                    showMessage("Not yet Implemented");
+
                 } else if(v==sign_in_user){
                     if(isInternetAvailable()){
                         if(isEmailValid() && isPasswordValid()){
                             signIn();
                         }
+
                     } else {
                         showMessage(getString(R.string.no_internet));
                     }
+
                 } else if(v==showPassword){
                     if(!isPasswordVisible){
                         isPasswordVisible = true;
@@ -94,7 +101,7 @@ public class AuthActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
-                                            notifyPasswordReset(getString(R.string.forgot_password_email_sent1) +
+                                            notifyPasswordReset( getString(R.string.forgot_password_email_sent1) +
                                                     em + getString(R.string.forgot_password_email_sent2));
                                         } else {
                                             notifyPasswordReset(getString(R.string.signin_error_email_1));
@@ -139,15 +146,27 @@ public class AuthActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(!task.isSuccessful()) {
-//                        if(task.getException() instanceof FirebaseAuthInvalidUserException){
-//                            showMessage(getString(R.string.signin_error_email_1));
-//                        } else {
-//                            showMessage(getString(R.string.signin_error_email_2));
-//                        }
+                        if(task.getException() instanceof FirebaseAuthInvalidUserException){
+                            showMessage(getString(R.string.signin_error_email_1));
+
+//                          TODO: Prompt user of SignUp option in convoform
+
+                        } else {
+                            showMessage(getString(R.string.signin_error_email_2));
+                        }
                     } else {
                         try{
-                            writeNewUser(email, firebaseAuth.getCurrentUser().getUid());
+                            showMessage("Not implemented yet");
+
+//                            TODO: Launch convoform (conversational form)
+                            Intent intent = new Intent(AuthActivity.this, ConvoForm.class);
+                            startActivity(intent);
+                            finish();
                         } catch (Exception e){
+
+                            Log.e(TAG,"New User creation error:" + e);
+
+                            //for developer easy test purposes only. Should not be published
                             Toast.makeText(AuthActivity.this, "Error:" + e, Toast.LENGTH_LONG).show();
                         }
                         Intent intent = new Intent(AuthActivity.this, FormActivity.class);
@@ -177,7 +196,7 @@ public class AuthActivity extends AppCompatActivity {
                         //Launch Map Activity or News Feed
                         //For the sake of Testing FormActivity, we will be launching
                         //FormActivity instead
-                        Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+                        Intent intent = new Intent(AuthActivity.this, ConvoForm.class);
                         startActivity(intent);
                         AuthActivity.this.finish();
                     }
@@ -202,6 +221,26 @@ public class AuthActivity extends AppCompatActivity {
         });
         progressDialog.setMessage(getString(R.string.new_account_sign_in));
         progressDialog.show();
+    }
+
+    //TODO Create option in setting for signOut method(). This method should be moved to where logic
+    // of Settings would be setup
+
+    private void signOut() {
+        try {
+            firebaseAuth.signOut();
+
+            if (firebaseAuth.getCurrentUser() == null) {
+                //send user back to logon activity
+                Intent intent = new Intent(this, AuthActivity.class);
+                startActivity(intent);
+                //return to AuthActivity
+            }
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error Signing out: " + e);
+            showMessage("Sorry, we couldn't sign you out at the moment");
+        }
     }
 
     private boolean isInternetAvailable(){
@@ -252,31 +291,10 @@ public class AuthActivity extends AppCompatActivity {
         messageView.setGravity(Gravity.CENTER);
     }
 
+
     private void showMessage(String message) {
         Snackbar.make(sign_in_user, message, Snackbar.LENGTH_LONG).show();
         vibrator.vibrate(80);
     }
 
-    @IgnoreExtraProperties
-    private class User {
-        private String userId;
-        private String userEmail;
-
-        private User() {
-            //Default Constructor for calls to DataSnapshot.getValue(User.class);
-        }
-
-        private User(String email, String uid) {
-            this.userEmail = email;
-            this.userId = uid;
-        }
-    }
-
-
-    private void writeNewUser(String email, String userId) {
-        User user = new User(email, userId);
-
-        //when there has been an update in the User Email child
-        databaseReference.child("users").child(userId).setValue(user);
-    }
 }
